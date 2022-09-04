@@ -1,6 +1,7 @@
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { useGlobalContext } from "../context/TaskContext";
+import moment from "moment";
 
 const Card = ({ todo, index }) => {
 	const { removeTask } = useGlobalContext();
@@ -46,7 +47,10 @@ const Card = ({ todo, index }) => {
 					{todo.taskName}
 				</span>
 				<p className="text flex-1 px-2">{todo.description}</p>
-				<div className="flex justify-end ">
+				<div className="flex justify-between ">
+					<p className="text-sm font-medium text-gray-500 italic">
+						{moment(todo.id).format("MMM Do YY, h:mm:ss a")}
+					</p>
 					<button onClick={() => removeTask(todo.id)}>
 						<BiTrash
 							size={26}

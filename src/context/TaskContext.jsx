@@ -2,10 +2,19 @@ import React, { useContext, createContext } from "react";
 
 const TaskContext = createContext();
 
+const getLocalStorage = () => {
+	let list = localStorage.getItem("list");
+	if (list) {
+		return JSON.parse(localStorage.getItem("list"));
+	} else {
+		return [];
+	}
+};
+
 export const TaskContextProvider = ({ children }) => {
 	const [taskName, setTaskName] = React.useState("");
 	const [description, setDescription] = React.useState("");
-	const [list, setList] = React.useState([]);
+	const [list, setList] = React.useState(getLocalStorage());
 
 	React.useEffect(() => {
 		let arr = localStorage.getItem("task");
@@ -21,11 +30,10 @@ export const TaskContextProvider = ({ children }) => {
 		if (!taskName || !description) {
 			alert("All field are mandatory");
 		} else {
-			let newItem = { id: new Date().getTime().toString(), taskName, description };
+			let newItem = { id: new Date(), taskName, description };
 			setList([...list, newItem]);
 			setTaskName("");
 			setDescription("");
-			localStorage.setItem("task", JSON.stringify(list));
 		}
 	}
 
@@ -36,6 +44,9 @@ export const TaskContextProvider = ({ children }) => {
 		setList(newList);
 	}
 
+	React.useEffect(() => {
+		localStorage.setItem("task", JSON.stringify(list));
+	}, [list]);
 	return (
 		<TaskContext.Provider
 			value={{
