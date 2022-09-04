@@ -1,6 +1,7 @@
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import { useGlobalContext } from "../context/TaskContext";
+
 const Card = ({ todo, index }) => {
 	const { removeTask } = useGlobalContext();
 	const colors = [
@@ -29,9 +30,10 @@ const Card = ({ todo, index }) => {
 	return (
 		<div>
 			<div
-				className="w-80 h-64 flex flex-col gap-4 shadow-2xl py-4 px-4 hover:scale-105 transition-all ease-out"
+				className="w-62 md:w-72 flex flex-col gap-4 shadow-2xl py-4 px-4 hover:scale-105 transition-all ease-out"
 				style={{
 					borderTop: `5px solid ${colors[index % 5].primaryColor}`,
+					height: "fit-content",
 				}}
 			>
 				<span
